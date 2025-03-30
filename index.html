@@ -1,0 +1,140 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimalist Forum</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Add class for gematria state -->
+  <div class="container">
+    <aside class="sidebar">
+      <div class="user-section">
+        <span class="user-label">User:</span>
+        <span id="user-display"></span>
+        <button id="refresh-user" title="Refresh username">
+          <svg class="refresh-icon" viewBox="0 0 24 24">
+            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="profile-section">
+          <button id="profile-login-btn" class="profile-btn">
+            <svg class="profile-icon" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <span>Profile / Saved</span>
+          </button>
+          <form id="saved-form" class="profile-login hidden">
+            <input type="text" id="saved-user" placeholder="Nombre de usuario">
+            <input type="password" id="saved-pass" placeholder="Contraseña">
+            <button type="submit">Acceder</button>
+          </form>
+          <div id="saved-posts">
+             <p class="empty">Login to see saved posts.</p>
+          </div>
+      </div>
+       <div class="sidebar-scroll-indicator"></div>
+    </aside>
+
+    <main class="main-content">
+      <header>
+         <button id="toggle-sidebar" class="nav-btn" title="Toggle Sidebar">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/> <!-- Left Chevron -->
+            </svg>
+         </button>
+         <h1 id="chat-name"></h1>
+         <div class="header-nav-placeholder"></div> 
+         <div class="token-section">
+           <form id="token-form">
+             <button type="button" id="clear-token-btn" class="nav-btn" title="Clear token">
+               <svg class="trash-icon" viewBox="0 0 24 24">
+                 <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+               </svg>
+             </button>
+             <input id="token-input" type="text" placeholder="TOKEN" required>
+             <button type="submit">IR</button> 
+           </form>
+           <button id="copy-token" class="nav-btn" title="Copiar enlace"> 
+             <svg class="copy-icon" viewBox="0 0 24 24">
+               <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+             </svg>
+           </button>
+           <button id="random-chat" class="nav-btn" title="Explorar Chats"> 
+             <svg class="dice-icon" viewBox="0 0 24 24">
+               <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7.5 18c-.83 0-1.5-.67-1.5-1.5S6.67 15 7.5 15s1.5.67 1.5 1.5S8.33 18 7.5 18zm0-9C6.67 9 6 8.33 6 7.5S6.67 6 7.5 6 9 6.67 9 7.5 8.33 9 7.5 9zm4.5 4.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5 4.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-9c-.83 0-1.5-.67-1.5-1.5S15.67 6 16.5 6s1.5.67 1.5 1.5S17.33 9 16.5 9z"/>
+             </svg>
+           </button>
+           <!-- Gematria Toggle Button -->
+           <button id="toggle-gematria" class="nav-btn" title="Toggle Gematria Calculator">
+             <svg class="nav-icon chevron-right" viewBox="0 0 24 24">
+               <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/> <!-- Right Chevron -->
+             </svg>
+           </button>
+         </div>
+      </header>
+      <div id="messages-container" class="messages-area">
+        <div id="messages">
+          <!-- Messages will be added here by JS -->
+        </div>
+        <div id="chat-overlay">
+          <div id="overlay-message">HAGA CLICK PARA ABRIR EL CHAT</div>
+        </div>
+      </div>
+      <form id="message-form">
+         <textarea id="message-input" placeholder="Escribe tu mensaje..."></textarea>
+         <div class="form-actions">
+           <div class="placeholder-box"></div>
+           <input type="file" id="image-input" accept="image/*" hidden>
+           <button type="button" id="upload-image-btn" class="form-btn">Subir imagen</button>
+           <button type="submit" class="form-btn">Post</button>
+         </div>
+          <div id="image-preview" class="image-preview"></div>
+      </form>
+    </main>
+
+    <!-- Gematria Sidebar -->
+    <aside id="gematria-sidebar" class="gematria-sidebar">
+        <h3>Gematría Calculator</h3>
+        <div class="gematria-calculator">
+            <input type="text" id="gematria-input" placeholder="Ingrese texto...">
+            <button id="gematria-calculate-btn">Calcular Gematría</button>
+            <div id="gematria-breakdown">
+                <!-- Breakdown like p=60 e=5 ... will appear here -->
+            </div>
+            <div id="gematria-total">
+                <!-- Total will appear here -->
+            </div>
+        </div>
+    </aside>
+
+  </div>
+
+  <div class="modal-overlay"></div>
+  <div class="modal" id="save-modal">
+    <h3>Guardar en perfil</h3>
+    <form id="profile-form">
+      <input type="text" id="profile-user" placeholder="Usuario" required readonly>
+      <input type="password" id="profile-pass" placeholder="Contraseña" required>
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+
+  <script>
+    // Apply initial states for BOTH sidebars
+    const isSidebarCollapsed = localStorage.getItem('forum-sidebarCollapsed') === 'true';
+    const isGematriaSidebarCollapsed = localStorage.getItem('forum-gematriaCollapsed') === 'true';
+    const container = document.querySelector('.container');
+    if (isSidebarCollapsed) {
+      container.classList.add('sidebar-collapsed');
+    }
+    if (isGematriaSidebarCollapsed) {
+        container.classList.add('gematria-collapsed');
+    }
+  </script>
+  <!-- Import gematria module -->
+  <script type="module" src="gematria.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
